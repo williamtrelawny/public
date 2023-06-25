@@ -50,6 +50,7 @@ done
 ################### MAIN #################################
 
 # Install prereqs:
+echo "=== Installing prerequisites..."
 sudo apt update
 sudo apt install -y gpg curl apt-transport-https ca-certificates 
 
@@ -116,6 +117,7 @@ sudo mkdir -p /opt/cni/bin
 sudo tar Cxvzf /opt/cni/bin ./cni-plugins-linux-amd64-*.tgz
 
 # Generate default containerd config:
+echo "=== Configuring containerd..."
 sudo mkdir -p /etc/containerd
 containerd config default | sudo tee /etc/containerd/config.toml > /dev/null
 
@@ -127,6 +129,7 @@ sudo dasel put -t bool -f /etc/containerd/config.toml -v true '.plugins.io\.cont
 sudo systemctl restart containerd
 
 # Install kubeadm, kubelet, and kubectl tools:
+echo "=== Installing kubeadm, kubelet, and kubectl..."
 # Download Google Cloud gpg key:
 curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/kubernetes-archive-keyring.gpg
 # Add Kubernetes repo to apt sources:
@@ -137,6 +140,11 @@ sudo apt install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 
 # Configure containerd to use same version of 'pause' image that kubeadm uses:
+echo "=== Pulling k8s images from registry.k8s.io..."
 PAUSE_VER=$(sudo kubeadm config images pull | grep -oP "registry.*?pause.*$")
 sudo dasel put -t string -f /etc/containerd/config.toml -v $PAUSE_VER '.plugins.io\.containerd\.grpc\.v1\.cri.sandbox_image'
 sudo systemctl restart containerd
+
+echo "=== kubeadm setup complete!"
+echo "=== Now run 'kubeadm init' on your control plane node(s) to create a k8s cluster,"
+echo "=== or run 'kubeadm join' on your worker node(s) to join them to an existing cluster."
