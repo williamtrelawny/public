@@ -28,6 +28,8 @@ undo()
   sudo apt purge -y --allow-change-held-packages kubeadm kubelet kubectl
   sudo rm /etc/apt/trusted.gpg.d/kubernetes-archive-keyring.gpg /etc/apt/sources.list.d/kubernetes.list
   sudo apt autoremove -y
+  echo "=== Cleaning up vestigial files on OS..."
+  sudo rm -rf $(sudo find /* -not \( -path $HOME -prune \) \( -name "*kube*" -o -name "*k8s*" -o -name "*containerd*" \))
   echo "=== Cleaning up /tmp install dir..."
   sudo rm -rf /tmp/setup-kubeadm
   echo "=== Reversed all script functions."
