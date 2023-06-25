@@ -146,5 +146,5 @@ sudo dasel put -t string -f /etc/containerd/config.toml -v $PAUSE_VER '.plugins.
 sudo systemctl restart containerd
 
 echo "=== kubeadm setup complete!"
-echo "=== Now run 'kubeadm init' on your control plane node(s) to create a k8s cluster,"
-echo "=== or run 'kubeadm join' on your worker node(s) to join them to an existing cluster."
+echo "=== Now run 'kubeadm init' on the first control plane node to create a k8s cluster,"
+echo "=== or run 'kubeadm join' on your worker node(s) and/or redundant CP nodes to join them to an existing cluster."
