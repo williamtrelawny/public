@@ -133,3 +133,8 @@ echo "deb [signed-by=/etc/apt/trusted.gpg.d/kubernetes-archive-keyring.gpg] http
 sudo apt update
 sudo apt install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
+
+# Configure containerd to use same version of 'pause' image that kubeadm uses:
+PAUSE_VER=$(sudo kubeadm config images pull | grep -oP "registry.*?pause.*$")
+sudo dasel put -t string -f /etc/containerd/config.toml -v $PAUSE_VER '.plugins.io\.containerd\.grpc\.v1\.cri.sandbox_image'
+sudo systemctl restart containerd
