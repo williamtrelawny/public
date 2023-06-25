@@ -8,6 +8,8 @@ Use this to setup a brand new VM with everything necessary to create or join a k
 - Configures the required `sysctl` settings on the OS
 - Installs the `kubeadm`, `kubectl`, and `kubelet` tools from the Google Cloud `apt` repo
 
+**Note:** Currently, this script has only been tested on Debian 11.
+
 ### Usage:
 ```
 ./install-kube-tools.sh [-u]
