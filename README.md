@@ -7,3 +7,9 @@ Use this to setup a brand new VM with everything necessary to create or join a k
 - Configures `containerd` to use the `systemd` cgroup
 - Configures the required `sysctl` settings on the OS
 - Installs the `kubeadm`, `kubectl`, and `kubelet` tools from the Google Cloud `apt` repo
+
+### Usage:
+```
+./install-kube-tools.sh [-u]
+  -u: undo all script operations, revert back to clean slate
+```
