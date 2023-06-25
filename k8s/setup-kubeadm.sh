@@ -29,7 +29,7 @@ undo()
   sudo rm /etc/apt/trusted.gpg.d/kubernetes-archive-keyring.gpg /etc/apt/sources.list.d/kubernetes.list
   sudo apt autoremove -y
   echo "=== Cleaning up vestigial files on OS..."
-  sudo rm -rf $(sudo find /* -not \( -path $HOME -prune \) \( -name "*kube*" -o -name "*k8s*" -o -name "*containerd*" \))
+  sudo rm -rf $(sudo find /* -not \( -path $HOME -prune \) -not \( -path /sys/fs -prune \) \( -name "*kube*" -o -name "*k8s*" -o -name "*containerd*" \)) /etc/cni
   echo "=== Cleaning up /tmp install dir..."
   sudo rm -rf /tmp/setup-kubeadm
   echo "=== Reversed all script functions."
